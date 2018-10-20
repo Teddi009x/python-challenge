@@ -64,7 +64,7 @@ def precipitation():
 
 @app.route("/api/v1.0/stations")
 def stations():
-    """Return a list of Stationsr"""
+    """Return a list of Stations"""
     # Query all station
     results = list(np.ravel(session.query(Station.station).all()))
 
