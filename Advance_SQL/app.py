@@ -64,7 +64,7 @@ def precipitation():
 
 @app.route("/api/v1.0/stations")
 def stations():
-    """Return a list of passenger data including the name, age, and sex of each passenger"""
+    """Return a list of Stationsr"""
     # Query all station
     results = list(np.ravel(session.query(Station.station).all()))
 
@@ -76,7 +76,7 @@ def stations():
 
 @app.route("/api/v1.0/temperature")
 def temperature():
-    """Return a list of passenger data including the name, age, and sex of each passenger"""
+    """Return temperature for dates betwee 2016-08-24 and 2017-08-23"""
     # Query all temperature
     results = session.query(Measurement.date, Measurement.tobs).\
     filter(Measurement.date >= '2016-08-24').filter(Measurement.date <= '2017-08-23').\
