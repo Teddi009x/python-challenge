@@ -25,7 +25,6 @@ def scrape_mars():
     # news_title = soup.title.text
     results["news_title"] = soup.find('div',{'class':'content_title'}).text
 
-
     # Extract title text
     html = browser.html
     soup = bs(html, 'html.parser') 
@@ -35,8 +34,6 @@ def scrape_mars():
 
 
 # Finding Mars featured image
-
-
 
     url = 'https://www.jpl.nasa.gov/spaceimages/?search=feature&category=Mars#submit'
     browser.visit(url)
@@ -55,8 +52,6 @@ def scrape_mars():
 
 # Finding Weather conditions on Mars from twitter
 
-
-
     twit_url = 'https://twitter.com/marswxreport?lang=en'
     browser.visit(twit_url)
 
@@ -66,14 +61,8 @@ def scrape_mars():
 
     results["twt_title"] = soup.find('div',{'class':'js-tweet-text-container'}).text
 
- 
-
- 
-
 
 # Finding Mars Facts
-
-
 
     fact_url = 'http://space-facts.com/mars'
     browser.visit(fact_url)
@@ -90,18 +79,13 @@ def scrape_mars():
     table_df = pd.read_html('http://space-facts.com/mars')
     table_df = table_df[0]
   
-
     table_df.columns = ['0', '1']
-    table_df = table_df.rename(columns={'0': 'Description', '1': 'Values'})
-   
+    table_df = table_df.rename(columns={'0': 'Description', '1': 'Values'}) 
 
     results["table_df"] = table_df.to_html()
    
 
-   
-
 # Finding Mars Hemisphere images
-
 
     url = 'https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars'
     browser.visit(url)
