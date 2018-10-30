@@ -47,7 +47,8 @@ def scrape_mars():
     soup = bs(html, 'html.parser') 
 
     imgs = soup.find("img",{"class":"fancybox-image"})['src']
-    results["mar_imgs"] = "https://www.jpl.nasa.gov/space" +imgs
+    
+    results["mar_imgs"] = "https://www.jpl.nasa.gov/" +imgs
 
 
 # Finding Weather conditions on Mars from twitter
