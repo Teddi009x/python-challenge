@@ -2,7 +2,7 @@ var svgWidth = 960;
 var svgHeight = 500;
 
 var margin = {
-  top: 20,
+  top: 30,
   right: 40,
   bottom: 100,
   left: 100
@@ -94,7 +94,7 @@ d3.select(".chart")
       .attr("dy", function(data, index){return 5;})
       .attr("text-anchor", "middle")
       .text(function(data, index){return data.abbr;})
-      .attr("font-size", 12)
+      .attr("font-size", 10)
       .attr('fill', 'white');
 
     // Step 6: Initialize tool tip
@@ -103,7 +103,7 @@ d3.select(".chart")
       .attr("class", "tooltip")
       .offset([80, -60])
       .html(function(d) {
-        return (`${d.state}<br>Poverty Rate: ${d.poverty}<br>No Insurance: ${d.healthcare}`);
+        return (`${d.state}<br>Poverty Rate %: ${d.poverty}<br>Lacks Healthcare %: ${d.healthcare}`);
       });
 
     // Step 7: Create tooltip in the chart
