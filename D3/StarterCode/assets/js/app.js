@@ -4,7 +4,7 @@ var svgHeight = 500;
 var margin = {
   top: 20,
   right: 40,
-  bottom: 60,
+  bottom: 100,
   left: 100
 };
 
@@ -82,14 +82,20 @@ d3.select(".chart")
     // // Step 5: Create Circles
     // // ==============================
     var circlesGroup = chartGroup.selectAll("circle")
-    .data(healthData)
-    .enter()
-    .append("circle")
-    .attr("cx", d => xLinearScale(d.poverty))
-    .attr("cy", d => yLinearScale(d.healthcare))
-    .attr("r", "10")
-    .attr("fill", "lightblue")
-    .attr("opacity", ".5");
+      .data(healthData)
+      .enter()
+      .append("circle")
+      .attr("cx", d => xLinearScale(d.poverty))
+      .attr("cy", d => yLinearScale(d.healthcare))
+      .attr("r", "15")
+      .attr("fill", "lightblue")
+      .attr("opacity", ".5");
+    circlesGroup.append("text")
+      .attr("dy", function(data, index){return 5;})
+      .attr("text-anchor", "middle")
+      .text(function(data, index){return data.abbr;})
+      .attr("font-size", 12)
+      .attr('fill', 'white');
 
     // Step 6: Initialize tool tip
     // ==============================
