@@ -73,7 +73,7 @@ d3.select(".chart")
     // Step 4: Append Axes to the chart
     // ==============================
     chartGroup.append("g")
-      .attr("transform", `translate(0`,` ${height})`)
+      .attr("transform", `translate(0, ${height})`)
       .call(bottomAxis);
 
     chartGroup.append("g")
@@ -90,12 +90,7 @@ d3.select(".chart")
       .attr("r", "15")
       .attr("fill", "lightblue")
       .attr("opacity", ".5");
-    circlesGroup.append("text")
-      .attr("dy", function(data, index){return 5;})
-      .attr("text-anchor", "middle")
-      .text(function(data, index){return data.abbr;})
-      .attr("font-size", 10)
-      .attr('fill', 'white');
+    
 
     // Step 6: Initialize tool tip
     // ==============================
@@ -133,4 +128,11 @@ d3.select(".chart")
       .attr("transform", "translate(" + width / 2 + " ," + (height + margin.top + 30) + ")")
       .attr("class", "axisText")
       .text("In Poverty (%)");
+
+    chartGroup.append("text")
+      .attr("dx", d => xLinearScale(d.poverty))
+      .attr("dy", d => yLinearScale(d.healthcare))
+      .attr("text-anchor", "middle")
+      .text(function(data){return data.abbr;})
+      .attr("font-size", 10);
 });
