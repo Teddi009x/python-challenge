@@ -37,8 +37,6 @@ legend.onAdd = function() {
   var labels = ["0-1","1-2","2-3","3-4","4-5","5+"];
   var legends = [];
 
-  legend.addTo(myMap);
-
   //div.innerHTML = legendInfo;
 
   for(var i=0;i<labels.length;i++) {
@@ -52,8 +50,9 @@ legend.onAdd = function() {
 };
   
 // Adding legend to the map
-legend.addTo(Map);
+legend.addTo(map);
 }
+
 
 queryUrl= "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_day.geojson";
 
@@ -62,12 +61,29 @@ queryUrl= "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_day.geo
       return L.circleMarker(latlng, {
         stroke:false, 
         fillopacity: 0.75, 
-        color: "white",
-        fillcolor: getColor(feature.properties.mag),
-        radius: feature.properties.mag*3
+        color: getColor(feature.properties.mag),
+        radius: feature.properties.mag * 3
       })
     }
   })
+
+  
+  var faults = L.geoJSON([],{
+    pointToLayer: function(feature,latlng){
+      return L.circleMarker(latlng, {
+        stroke:false, 
+        fillopacity: 0.75, 
+        color: getColor(feature.properties.mag),
+        radius: feature.properties.mag * 3
+      })
+    }
+  })
+.bindPopup(function(layer){
+                            return("<h3>" + layer.feature.properties.place +
+                              "</h3><hr><p>" + layer.feature.properties.mag + "</p><hr>" +
+                              "</h3><p>" + new Date(layer.feature.properties.time) + "</p>"
+                              );
+                          });
 
 d3.json(queryUrl,function(data){
   earthquakes.addData(data.features);
@@ -87,7 +103,7 @@ var overlayMaps = {
 // Create the map object with options
 var map = L.map("map-id", {
   center: [40.73, -74.0059],
-  zoom: 12,
+  zoom: 3,
   layers: [lightmap]
 });
 
@@ -96,6 +112,7 @@ var map = L.map("map-id", {
     collapsed: false
   }).addTo(map);
 
+  CreateLegend();
   
 
 
