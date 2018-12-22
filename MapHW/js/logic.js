@@ -67,23 +67,29 @@ queryUrl= "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/1.0_day.geo
     }
   })
 
-  
-  var faults = L.geoJSON([],{
-    pointToLayer: function(feature,latlng){
-      return L.circleMarker(latlng, {
-        stroke:false, 
-        fillopacity: 0.75, 
-        color: getColor(feature.properties.mag),
-        radius: feature.properties.mag * 3
-      })
-    }
-  })
 .bindPopup(function(layer){
                             return("<h3>" + layer.feature.properties.place +
                               "</h3><hr><p>" + layer.feature.properties.mag + "</p><hr>" +
                               "</h3><p>" + new Date(layer.feature.properties.time) + "</p>"
                               );
                           });
+
+var fault_URL = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
+
+var faultLine = L.geoJSON([],{
+  style: function (feature) {
+      return {color: 'orange',fill:false,weight :2};
+  }
+    }).bindPopup(function (layer) {
+      return layer.feature.properties.description;
+  });
+
+
+d3.json(fault_URL,function(data){
+
+faultLine.addData(data.features);
+});
+
 
 d3.json(queryUrl,function(data){
   earthquakes.addData(data.features);
@@ -97,7 +103,8 @@ var baseMaps = {
 
 // // Create an overlayMaps object to hold the geoStations layer
 var overlayMaps = {
-  "Earthquake Points": earthquakes
+  "Earthquake Points": earthquakes,
+  "Fault Areas": faultLine
 };
 
 // Create the map object with options
